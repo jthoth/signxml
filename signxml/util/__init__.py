@@ -148,7 +148,8 @@ class XMLProcessor:
             # HACK: deep copy won't keep root's namespaces resulting in an invalid digest
             # We use a copy so we can modify the tree
             # TODO: turn this off for xmlenc
-            return fromstring(etree.tostring(data))
+            parser = etree.XMLParser(remove_comments=True, resolve_entities=False, huge_tree=True)
+            return fromstring(etree.tostring(data), parser=parser)
 
 
 def hmac_sha1(key, message):
